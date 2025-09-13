@@ -1,6 +1,6 @@
 # ESP32 Application for MPI System
 
-## 1.Overview
+## 1. Overview
 This repository contains the implementation of my **Bachelor’s Thesis** at **TU Braunschweig (EMG Institute)**, supervised by **Dr.-Ing. Thilo Viereck**.  
 
 **Thesis Title:**  
@@ -30,68 +30,62 @@ In this project, we use:
 
 <img src="fotos/2.jpg" alt="EA Power Supply" width="60%"/>
 
-
 ---
 
-## 3.Topology
+## 2. System Topology
 
-### 3.1 Network Topology
+### 2.1 Network Topology
 - Communication: **Ethernet (Modbus TCP)**  
+
 <img src="fotos/3.png" alt="Network Topology" width="60%"/>
 
-
-### 3.2 Logic Topology
-
+### 2.2 Logical Topology
 - ESP32 operates in **both**:  
   - Modbus TCP **Server mode** (receives commands from PC)  
   - Modbus TCP **Client mode** (controls EA Power Supply)  
-
 
 <img src="fotos/4.png" alt="Logic Topology" width="60%"/>
 
 ---
 
-## 4 Program 
+## 3. Program
 
-## 4.1 Program flow
+### 3.1 Program Flow
+<img src="fotos/5.png" alt="Program Flow" width="60%"/>
 
-<img src="fotos/5.png" alt="Logic Topology" width="60%"/>
-
-### Initialization
+#### Initialization
 - Configure GPIOs: relay pins + crystal oscillator pin  
 - Initialize **SPIFFS file system** → stores configuration in JSON format  
   - Runtime: config in RAM  
   - Flash: persistent JSON backup  
 
-### Server Mode
+#### Server Mode
 - Register Modbus **callback functions** for different function codes  
 - Define **parameter areas** and **structs**  
 - Runtime values stored in RAM  
 
-### Client Mode
+#### Client Mode
 - Functions for **read/write** to the EA Power Supply  
 - Additional protection: **slew-rate limiter**, **interlock**  
 
-### FreeRTOS Task
+#### FreeRTOS Task
 - A background task continuously polls the power supply  
 - Ensures **real-time data synchronization**  
 
 ---
 
-## 4.2 Program Logic
-
-<img src="fotos/6.png" alt="Logic Topology" width="60%"/>
+### 3.2 Program Logic
+<img src="fotos/6.png" alt="Program Logic" width="60%"/>
 
 1. **Host PC → ESP32 (Server Mode)**  
    - ESP32 parses the received command  
 
-2. **Command Type**  
+2. **Command Types**  
    - **Read ESP32 / Power Supply** → return value from RAM  
    - **Write ESP32** → update struct + return response  
    - **Write Power Supply** → ESP32 switches to Client Mode, forwards command, returns response  
 
 ---
 
-## 5.Results
-
-
+## 4. Results
+*(To be added after measurements and oscilloscope validation.)*
