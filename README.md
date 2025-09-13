@@ -145,7 +145,24 @@ By toggling the relay coil, the current direction through the load can be switch
 
 ## 5. Results
 
-### 5.1 Test Scenarios
+
+### 5.1 Slew-rate and voltage spikes
+
+In the code, we defined a **slew rate limiter**. This is necessary because our circuit contains a large inductor.  
+According to **Faraday’s law**: *u = L · di/dt*.  
+
+When the relay switches, we need to bring the current down to zero. If the current drops too quickly, it will cause an excessively high reverse voltage.  
+
+Therefore, we added a protection method in the function: instead of directly setting the current from *10 A → 0 A*, we gradually reduce it step by step (*10 A, 9 A, …, 1 A, 0 A*).  
+
+Oscilloscope measurements confirmed the effectiveness of this method.
+
+<p align="center">
+<img src="fotos/10.png" alt="Small rate" width="40%"/>
+<img src="fotos/11.png" alt="Large rate" width="40%"/>
+</p>
+
+### 5.2 Test Scenarios
 
 - **Write valid voltage**  
   - Command: `10 V`  
@@ -171,12 +188,3 @@ By toggling the relay coil, the current direction through the load can be switch
   - Command: `Continuous operation, 5 hours`  
   - Expected behaviour: Stable, no error observed  
   - Result: **Pass**
-
-
-### 5.2 Slew-rate and voltage spikes
-
-
-<p align="center">
-<img src="fotos/10.png" alt="Small rate" width="40%"/>
-<img src="fotos/11.png" alt="Large rate" width="40%"/>
-</p>
