@@ -6,6 +6,8 @@ This repository contains the implementation of my **Bachelor’s Thesis** at **T
 **Thesis Title:**  
 *ESP32-Based Relay Extension for a Bipolar Current Source with Modbus TCP*  
 
+<img src="fotos/1.jpg" alt="ESP32" width="60%"/>
+
 ### Goals
 - ✅ Develop a **C program** for the ESP32 (ESP-IDF environment)  
 - ✅ Develop a **Python program** for the host PC  
@@ -26,17 +28,29 @@ In this project, we use:
 - **EA Power Supply** as the unipolar current source (supports Modbus TCP)  
 - **ESP32** as the microcontroller  
 
+<img src="fotos/2.jpg" alt="EA Power Supply" width="60%"/>
+
+
 ---
 
 ## 🖧 Network Topology
+
 - Communication: **Ethernet (Modbus TCP)**  
+<img src="fotos/3.png" alt="Network Topology" width="60%"/>
+
+
 - ESP32 operates in **both**:  
   - Modbus TCP **Server mode** (receives commands from PC)  
   - Modbus TCP **Client mode** (controls EA Power Supply)  
 
+
+<img src="fotos/4.png" alt="Logic Topology" width="60%"/>
+
 ---
 
 ## ⚙️ Program Structure
+
+<img src="fotos/5.png" alt="Logic Topology" width="60%"/>
 
 ### Initialization
 - Configure GPIOs: relay pins + crystal oscillator pin  
@@ -60,6 +74,8 @@ In this project, we use:
 ---
 
 ## 🔄 Program Logic
+
+<img src="fotos/6.png" alt="Logic Topology" width="60%"/>
 
 1. **Host PC → ESP32 (Server Mode)**  
    - ESP32 parses the received command  
