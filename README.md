@@ -70,6 +70,8 @@ By toggling the relay coil, the current direction through the load can be switch
 <p align="center">
 <img src="fotos/9.png" alt="Relay schematic" width="50%"/>
 </p>
+
+
 ---
 
 ## 3. System Topology
