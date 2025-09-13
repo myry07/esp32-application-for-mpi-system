@@ -1,12 +1,16 @@
 # ESP32 Application for MPI System
 
 ## 1. Overview
-This repository contains the implementation of my **Bachelor’s Thesis** at **TU Braunschweig (EMG Institute)**, supervised by **Dr.-Ing. Thilo Viereck**.  
+This repository contains the implementation of my **Bachelor’s Thesis** at **TU Braunschweig ([EMG Institute](https://www.tu-braunschweig.de/emg))**, supervised by **[Dr.-Ing. Thilo Viereck](https://www.tu-braunschweig.de/emg/institut/team/dr-ing-thilo-viereck)**.  
 
 **Thesis Title:**  
 *ESP32-Based Relay Extension for a Bipolar Current Source with Modbus TCP*  
 
-<img src="fotos/1.jpg" alt="ESP32" width="40%"/>
+<p align="center">
+    <img src="fotos/1.jpg" alt="ESP32" width="40%"/>
+</p>
+
+
 
 ### 1.1 Goals
 - ✅ Develop a **C program** for the ESP32 (ESP-IDF environment)  
@@ -27,12 +31,15 @@ To reduce cost → a **unipolar power supply + ESP32 + relays** can be used.
 In this project, we use:  
 - **EA Power Supply** as the unipolar current source (supports Modbus TCP)  
 - **ESP32** as the microcontroller  
+  
+<p align="center">
+    <img src="fotos/2.jpg" alt="EA Power Supply" width="30%"/>
+</p>
 
-<img src="fotos/2.jpg" alt="EA Power Supply" width="30%"/>
 
 ---
 
-## 4. Hardware Design
+## 2. Hardware Design
 
 The PCB design is kept simple by directly using the **WT32-ETH01 development board**, which integrates:  
 - An **ESP32 module**  
@@ -42,9 +49,10 @@ The PCB design is kept simple by directly using the **WT32-ETH01 development boa
 
 This approach avoids complex custom PCB design and ensures reliable Ethernet + relay control for Modbus TCP applications.  
 
-<img src="fotos/8.png" alt="PCB" width="60%"/>
-<img src="fotos/7.png" alt="System block diagram" width="60%"/>
-
+<p align="center">
+<img src="fotos/8.png" alt="PCB" width="40%"/>
+<img src="fotos/7.png" alt="System block diagram" width="40%"/>
+</p>
 
 
 The following figure shows how a **DPDT (Double Pole Double Throw) relay** is used to reverse the current direction through the load:
@@ -59,8 +67,9 @@ By toggling the relay coil, the current direction through the load can be switch
 - Relay **OFF** → Load connected in one polarity  
 - Relay **ON** → Load polarity reversed  
 
-<img src="fotos/9.png" alt="Relay schematic" width="60%"/>
-
+<p align="center">
+<img src="fotos/9.png" alt="Relay schematic" width="50%"/>
+</p>
 ---
 
 ## 3. System Topology
@@ -68,21 +77,33 @@ By toggling the relay coil, the current direction through the load can be switch
 ### 3.1 Network Topology
 - Communication: **Ethernet (Modbus TCP)**  
 
+<p align="center">
 <img src="fotos/3.png" alt="Network Topology" width="60%"/>
+</p>
+
 
 ### 3.2 Logical Topology
 - ESP32 operates in **both**:  
   - Modbus TCP **Server mode** (receives commands from PC)  
   - Modbus TCP **Client mode** (controls EA Power Supply)  
 
+<p align="center">
 <img src="fotos/4.png" alt="Logic Topology" width="60%"/>
+</p>
+
 
 ---
 
 ## 4. Program
 
 ### 4.1 Program Flow
+
+
+<p align="center">
 <img src="fotos/5.png" alt="Program Flow" width="60%"/>
+</p>
+
+
 
 #### Initialization
 - Configure GPIOs: relay pins + crystal oscillator pin  
@@ -103,10 +124,14 @@ By toggling the relay coil, the current direction through the load can be switch
 - A background task continuously polls the power supply  
 - Ensures **real-time data synchronization**  
 
----
 
 ### 4.2 Program Logic
+
+<p align="center">
 <img src="fotos/6.png" alt="Program Logic" width="60%"/>
+</p>
+
+
 
 1. **Host PC → ESP32 (Server Mode)**  
    - ESP32 parses the received command  
@@ -119,4 +144,39 @@ By toggling the relay coil, the current direction through the load can be switch
 ---
 
 ## 5. Results
-*(To be added after measurements and oscilloscope validation.)*
+
+### 5.1 Test Scenarios
+
+- **Write valid voltage**  
+  - Command: `10 V`  
+  - Expected behaviour: outputs 10 V, OK response  
+  - Result: **Pass**
+
+- **Over-voltage attempt**  
+  - Command: `42 V`  
+  - Expected behaviour: Reject + exception code  
+  - Result: **Pass**
+
+- **Current inversion**  
+  - Command: `–5 A → +10 A`  
+  - Expected behaviour: Ramp + relay switch + delayed response  
+  - Result: **Pass**
+
+- **Relay protection**  
+  - Command: `Switch relay while I ≠ 0`  
+  - Expected behaviour: Relay state locked, no switching until *I = 0*  
+  - Result: **Pass**
+
+- **Long-time test**  
+  - Command: `Continuous operation, 5 hours`  
+  - Expected behaviour: Stable, no error observed  
+  - Result: **Pass**
+
+
+### 5.2 Slew-rate and voltage spikes
+
+
+<p align="center">
+<img src="fotos/10.png" alt="Small rate" width="40%"/>
+<img src="fotos/11.png" alt="Large rate" width="40%"/>
+</p>
