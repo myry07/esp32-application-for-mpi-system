@@ -1,6 +1,6 @@
 # ESP32 Application for MPI System
 
-## 📖 Overview
+## 1.Overview
 This repository contains the implementation of my **Bachelor’s Thesis** at **TU Braunschweig (EMG Institute)**, supervised by **Dr.-Ing. Thilo Viereck**.  
 
 **Thesis Title:**  
@@ -8,12 +8,12 @@ This repository contains the implementation of my **Bachelor’s Thesis** at **T
 
 <img src="fotos/1.jpg" alt="ESP32" width="60%"/>
 
-### Goals
+### 1.1 Goals
 - ✅ Develop a **C program** for the ESP32 (ESP-IDF environment)  
 - ✅ Develop a **Python program** for the host PC  
 - ✅ Validate the system with an oscilloscope  
 
-### Context
+### 1.2 Context
 At the EMG Institute, an **MPI (Magnetic Particle Imaging)** system is used.  
 It requires three bidirectional magnetic fields:  
 
@@ -33,11 +33,14 @@ In this project, we use:
 
 ---
 
-## 🖧 Network Topology
+## 3.Topology
 
+### 3.1 Network Topology
 - Communication: **Ethernet (Modbus TCP)**  
 <img src="fotos/3.png" alt="Network Topology" width="60%"/>
 
+
+### 3.2 Logic Topology
 
 - ESP32 operates in **both**:  
   - Modbus TCP **Server mode** (receives commands from PC)  
@@ -48,7 +51,9 @@ In this project, we use:
 
 ---
 
-## ⚙️ Program Structure
+## 4 Program 
+
+## 4.1 Program flow
 
 <img src="fotos/5.png" alt="Logic Topology" width="60%"/>
 
@@ -73,7 +78,7 @@ In this project, we use:
 
 ---
 
-## 🔄 Program Logic
+## 4.2 Program Logic
 
 <img src="fotos/6.png" alt="Logic Topology" width="60%"/>
 
@@ -87,6 +92,6 @@ In this project, we use:
 
 ---
 
-## 📊 Results
+## 5.Results
 
 
